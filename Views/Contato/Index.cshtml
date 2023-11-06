@@ -1,0 +1,79 @@
+﻿@model List<ContatoModel>
+@{
+    ViewData["Title"] = "Listagem de funcionários";
+}
+<div class="text-center">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-primary" role="button" asp-controller="contato" asp-action="Criar">Adicionar novo funcionário</a>
+    </div>
+    <br />
+
+
+    @if(TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">X</button>
+            This is a danger alert—check it out!
+            @TempData["MensagemErro"]
+        </div>
+    }
+
+  <br />
+
+    <h1 class="display-4">Listagem de funcionários</h1>
+
+    <table id="table-funcionarios" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Celular</th>
+                <th scope="col">Cargo</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(Model != null && Model.Any())
+            {
+                foreach (ContatoModel funcionario in Model)
+                {
+                    <tr>
+                        <th scope="row">@funcionario.Id</th>
+                        <td>@funcionario.Nome</td>
+                        <td>@funcionario.Email</td>
+                        <td>@funcionario.Celular</td>
+                        <td>@funcionario.Cargo</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a role="button" class="btn btn-warning" asp-route-id="@funcionario.Id" asp-controller="Contato" asp-action="Editar">Editar <i class="fa-light fa-pencil"></i></a>
+                                <a role="button" class="btn btn-danger" asp-route-id="@funcionario.Id" asp-controller="Contato" asp-action="ApagarConfirmacao">Apagar <i class="fas fa-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr class="odd"><td valign="top" colspan="5">Nenhum funcionário encontrado</td></tr>
+            }
+            <link rel="stylesheet"
+                  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+            </svg>
+
+        </tbody>
+    </table>
+</div>
+
+
+
